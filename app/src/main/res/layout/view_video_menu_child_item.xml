@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.homework.group.videoplayer.ui.menu.VideoMenuChildItemView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="55dp">
+
+    <ImageView
+        android:id="@+id/iv_icon"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="10dp"
+        android:background="#000"/>
+
+    <RelativeLayout
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/iv_icon"
+        android:layout_alignTop="@+id/iv_icon"
+        android:layout_alignBottom="@+id/iv_icon"
+        android:id="@+id/relativeLayout">
+
+        <TextView
+            android:id="@+id/tv_menu_child_title"
+            android:layout_marginTop="3dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:textColor="@color/gray"
+            android:text="我喜欢的视频"/>
+
+        <TextView
+            android:id="@+id/tv_menu_child_number"
+            android:textColor="@color/gray"
+            android:layout_marginBottom="3dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:text="10条"/>
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="5dp"
+        android:layout_height="20dp"
+        android:src="@mipmap/child_item_setting"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
+        android:layout_alignParentRight="true" />
+
+</com.homework.group.videoplayer.ui.menu.VideoMenuChildItemView>

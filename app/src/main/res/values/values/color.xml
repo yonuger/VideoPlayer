@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="ldrawer_color">#FFFFFF</color>
+    <color name="actionbar_color">#bf360c</color>
+    <color name="drawer_arrow_second_color">#303f9f</color>
+
+    <!-- Theme colors -->
+    <color name="theme_light">#F48FB1</color>
+    <color name="theme_default_primary">#EC407A</color>
+    <color name="theme_window_background">#2A2A2A</color>
+    <color name="accent">#EEFF41</color>
+    <color name="gray_row_color">#ff515252</color>
+
+    <color name="orange">#ffffdc7e</color>
+    <color name="grey">#ffd3d3d3</color>
+    <color name="green">#ff8dd304</color>
+    <color name="blue">#ff82e0ff</color>
+    <color name="yellow">#fffffbae</color>
+    <color name="red">#fff10800</color>
+    <color name="list_item_pressed">#1A000000</color>
+
+    <color name="sky_background">#228FC1</color>
+</resources>

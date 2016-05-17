@@ -1,0 +1,39 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <com.homework.group.videoplayer.ui.widgets.pullRefresh.PullToRefreshView
+        android:id="@+id/pull_to_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/rl_local_video"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <include
+                layout="@layout/view_local_video"/>
+
+        </RelativeLayout>
+
+
+        <ListView
+            android:layout_below="@+id/rl_local_video"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:id="@+id/lv_vedio"/>
+
+        </RelativeLayout>
+
+    </com.homework.group.videoplayer.ui.widgets.pullRefresh.PullToRefreshView>
+
+    </RelativeLayout>

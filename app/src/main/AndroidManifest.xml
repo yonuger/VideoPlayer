@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.homework.group.videoplayer">
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".ui.home.SampleActivity"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.detail.VideoDetailActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity android:name=".ui.mime.MimeActivity" />
+        <activity android:name=".ui.collection.CollectionActivity" />
+        <activity
+            android:name=".ui.history.HistoryActivty"
+            android:theme="@style/AppTheme_01" />
+        <activity
+            android:name=".ui.play.PlayActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:process=":vitamio" />
+        <activity
+            android:name=".ui.menu.VideoMenuActivity"
+            android:theme="@style/AppTheme_01"
+            ></activity>
+        <activity
+            android:name=".ui.menu.VideoMenuDetailActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+    </application>
+
+</manifest>
