@@ -15,28 +15,39 @@
  */
 
 package com.homework.group.videoplayer.ui.home;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.homework.group.videoplayer.R;
+import com.homework.group.videoplayer.sql.DatabaseHelper;
+import com.homework.group.videoplayer.sql.dao.VideoDao;
+import com.homework.group.videoplayer.sql.dao.impl.VideoDaoImpl;
+import com.homework.group.videoplayer.ui.detail.VideoDetailActivity;
 import com.homework.group.videoplayer.utils.FindUtils;
 import com.homework.group.videoplayer.ui.widgets.pullRefresh.PullToRefreshView;
 
 import java.util.List;
 
 
-public class SlidingTabsBasicFragment extends android.app.Fragment implements AbsListView.OnScrollListener{
+
+public class SlidingTabsBasicFragment extends android.app.Fragment implements AbsListView.OnScrollListener, AdapterView.OnItemClickListener {
 
     public static final int REFRESH_DELAY = 3000;
 
     private List<VideoInfo> videoInfoList;
     private ListView listView;
     private VideoAdapter mAdapter;
+
+    private VideoDao mVideoDao;
 
     private boolean mHasRequestedMore;
 
@@ -49,7 +60,8 @@ public class SlidingTabsBasicFragment extends android.app.Fragment implements Ab
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
 
-        getVideoFile();
+        mVideoDao = new VideoDaoImpl(getActivity());
+
         final PullToRefreshView mPullToRefreshView = (PullToRefreshView) view.findViewById(R.id.pull_to_refresh);
         mPullToRefreshView.setOnRefreshListener(new PullToRefreshView.OnRefreshListener() {
             @Override
@@ -64,19 +76,28 @@ public class SlidingTabsBasicFragment extends android.app.Fragment implements Ab
         });
 
         listView = (ListView) view.findViewById(R.id.lv_vedio);
-        if (mAdapter == null) {
-            mAdapter =  new VideoAdapter(getActivity(), videoInfoList);
-        }
+
+        getVideoFile();
+        mAdapter =  new VideoAdapter(getActivity(), videoInfoList);
         listView.setAdapter(mAdapter);
+        listView.setOnItemClickListener(this);
+
+
+    }
+
+    public void refresh() {
+        videoInfoList.clear();
+        videoInfoList = mVideoDao.requestAllVideo();
+        mAdapter =  new VideoAdapter(getActivity(), videoInfoList);
+        listView.setAdapter(mAdapter);
+        listView.setOnItemClickListener(this);
     }
 
     /**
      * 获取视频文件
      */
     private void getVideoFile() {
-        FindUtils findUtils = new FindUtils(getActivity());
-        findUtils.init();
-        videoInfoList = findUtils.getmVideoInfoList();
+        videoInfoList = mVideoDao.requestAllVideo();
     }
 
     @Override
@@ -110,5 +131,12 @@ public class SlidingTabsBasicFragment extends android.app.Fragment implements Ab
         // notify the adapter that we can update now
         mAdapter.notifyDataSetChanged();
         mHasRequestedMore = false;
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        Intent intent = new Intent(new Intent(getActivity(), VideoDetailActivity.class));
+        intent.putExtra("videoInfo", videoInfoList.get(i));
+        getActivity().startActivity(intent);
     }
 }

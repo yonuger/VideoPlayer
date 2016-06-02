@@ -5,6 +5,7 @@ import android.content.ContentResolver;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.ThumbnailUtils;
 import android.provider.MediaStore;
 import android.util.Log;
 
@@ -100,4 +101,5 @@ public class FindUtils {
         }
         return null;
     }
+
 }

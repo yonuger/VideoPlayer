@@ -21,13 +21,16 @@ public class VideoInfo implements Parcelable {
     private String displayName;
     private String path;
     private long process;
-    private Long id;
+    private long id;
 
     public VideoInfo(){
         path = "";
         title = "";
         imagePath = "";
         process = 0;
+        displayName = "";
+        time = "";
+        id = 0;
     }
 
     public void setTitle(String title) {
@@ -86,6 +89,14 @@ public class VideoInfo implements Parcelable {
         this.process = process;
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -100,6 +111,7 @@ public class VideoInfo implements Parcelable {
         out.writeString(displayName);
         out.writeString(path);
         out.writeLong(process);
+        out.writeLong(id);
     }
 
     public static final Parcelable.Creator<VideoInfo> CREATOR = new Creator<VideoInfo>()
@@ -126,13 +138,6 @@ public class VideoInfo implements Parcelable {
         displayName = in.readString();
         path = in.readString();
         process = in.readLong();
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
+        id = in.readLong();
     }
 }

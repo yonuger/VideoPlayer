@@ -2,6 +2,9 @@ package com.homework.group.videoplayer.ui.home;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.media.Image;
+import android.provider.MediaStore;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -11,6 +14,8 @@ import android.widget.TextView;
 
 import com.homework.group.videoplayer.R;
 import com.homework.group.videoplayer.ui.detail.VideoDetailActivity;
+import com.homework.group.videoplayer.utils.FindUtils;
+import com.homework.group.videoplayer.utils.ImageUtils;
 
 
 /**
@@ -20,7 +25,7 @@ import com.homework.group.videoplayer.ui.detail.VideoDetailActivity;
  * time: 14:56
  * e-mail：1160415122@qq.com
  */
-public class VideoListItemView extends RelativeLayout implements View.OnClickListener {
+public class VideoListItemView extends RelativeLayout {
 
     private Context context;
     private TextView titleTv;
@@ -64,8 +69,9 @@ public class VideoListItemView extends RelativeLayout implements View.OnClickLis
     public void resetView(VideoInfo videoInfo) {
         this.videoInfo = videoInfo;
         titleTv.setText(videoInfo.getTitle());
-        if( videoInfo.getBitmap() != null ) {
-            thumbIv.setImageBitmap(videoInfo.getBitmap());
+        Bitmap bitmap = ImageUtils.getVideoThumbnail(videoInfo.getPath(),60, 60, MediaStore.Images.Thumbnails.MICRO_KIND);
+        if( bitmap != null ) {
+            thumbIv.setImageBitmap(bitmap);
         }else{
             thumbIv.setImageResource(R.mipmap.video_default_icon);
         }
@@ -73,10 +79,4 @@ public class VideoListItemView extends RelativeLayout implements View.OnClickLis
         descTv.setText(videoInfo.getDisplayName());
     }
 
-    @Override
-    public void onClick(View v) {
-        Intent intent = new Intent(new Intent(context, VideoDetailActivity.class));
-        intent.putExtra("videoInfo", videoInfo);
-        getContext().startActivity(intent);
-    }
 }

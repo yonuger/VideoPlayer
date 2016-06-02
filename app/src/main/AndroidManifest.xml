@@ -9,14 +9,18 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".ui.home.SampleActivity"
-            android:label="@string/app_name">
+        <activity android:name=".ui.splash.SplashActivity"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.home.SampleActivity"
+            >
         </activity>
         <activity
             android:name=".ui.detail.VideoDetailActivity"
@@ -28,15 +32,22 @@
             android:theme="@style/AppTheme_01" />
         <activity
             android:name=".ui.play.PlayActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
-            android:process=":vitamio" />
-        <activity
-            android:name=".ui.menu.VideoMenuActivity"
-            android:theme="@style/AppTheme_01"
-            ></activity>
-        <activity
-            android:name=".ui.menu.VideoMenuDetailActivity"
+            android:process=":vitamio"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity
+            android:name=".ui.menu.main.VideoMenuActivity"
+            android:theme="@style/AppTheme_01" />
+        <activity
+            android:name=".ui.menu.detail.VideoMenuDetailActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity
+            android:name=".ui.detail.EditActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity
+            android:name=".ui.menu.VideoMenuOperationActivity"
+            android:theme="@style/Theme.Dialog_Activity" />
+        <activity android:name=".ui.menu.manager.VideoMenuManagerActivity"
+            android:theme="@style/AppTheme_01"/>
     </application>
 
 </manifest>

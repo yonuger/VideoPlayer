@@ -1,13 +1,12 @@
 package com.homework.group.videoplayer.ui.history;
 
-import android.content.pm.ApplicationInfo;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.baoyz.swipemenulistview.SwipeMenu;
@@ -15,9 +14,12 @@ import com.baoyz.swipemenulistview.SwipeMenuCreator;
 import com.baoyz.swipemenulistview.SwipeMenuItem;
 import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.homework.group.videoplayer.R;
+import com.homework.group.videoplayer.sql.dao.HistoryDao;
+import com.homework.group.videoplayer.sql.dao.impl.HistoryDaoImpl;
+import com.homework.group.videoplayer.ui.detail.VideoDetailActivity;
 import com.homework.group.videoplayer.ui.home.VideoAdapter;
-import com.homework.group.videoplayer.ui.home.VideoInfo;
 import com.homework.group.videoplayer.sql.DatabaseHelper;
+import com.homework.group.videoplayer.ui.home.VideoInfo;
 import com.homework.group.videoplayer.utils.FindUtils;
 import com.kymjs.frame.view.AppDelegate;
 
@@ -30,14 +32,14 @@ import java.util.List;
  * phone:15625430473
  * date:16/5/9  15:12
  */
-public class HistoryDelegate extends AppDelegate{
+public class HistoryDelegate extends AppDelegate implements AdapterView.OnItemClickListener {
 
-    private DatabaseHelper dbHelper;
     private List<VideoInfo> mVideoList;
     private SwipeMenuListView listView;
     private VideoAdapter adapter;
 
     private FindUtils findUtils;
+    private HistoryDao historyDao;
 
     @Override
     public int getRootLayoutId() {
@@ -48,11 +50,11 @@ public class HistoryDelegate extends AppDelegate{
     public void initWidget() {
         super.initWidget();
 
-        dbHelper = new DatabaseHelper(getActivity());
+        historyDao = new HistoryDaoImpl(getActivity());
         findUtils = new FindUtils(getActivity());
-        Log.e("查看语句","我是观看历史");
+
         initData();
-        listView = (SwipeMenuListView) getActivity().findViewById(R.id.swipelv_history);
+        listView = (SwipeMenuListView)get(R.id.swipelv_history);
         listView.setAdapter(adapter);
 
         initSwipe();
@@ -74,7 +76,7 @@ public class HistoryDelegate extends AppDelegate{
                 // set item width
                 deleteItem.setWidth(dp2px(90));
                 // set a icon
-                deleteItem.setIcon(R.drawable.ic_drawer);
+                deleteItem.setIcon(R.mipmap.delete_icon);
                 // add to menu
                 menu.addMenuItem(deleteItem);
             }
@@ -86,19 +88,13 @@ public class HistoryDelegate extends AppDelegate{
         listView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
             @Override
             public void onMenuItemClick(int position, SwipeMenu menu, int index) {
-//                ApplicationInfo item = mAppList.get(position);
-//                switch (index) {
-//                    case 0:
-//                        // open
-//                        open(item);
-//                        break;
-//                    case 1:
-//                        // delete
-////					delete(item);
-//                        mAppList.remove(position);
-//                        mAdapter.notifyDataSetChanged();
-//                        break;
-//                }
+                switch (index) {
+                    case 0:
+                        historyDao.deleteHistory(mVideoList.get(position));
+                        mVideoList.remove(position);
+                        adapter.notifyDataSetChanged();
+                        break;
+                }
             }
         });
 
@@ -116,19 +112,9 @@ public class HistoryDelegate extends AppDelegate{
             }
         });
 
+        listView.setOnItemClickListener(this);
         // other setting
 //		listView.setCloseInterpolator(new BounceInterpolator());
-
-        // test item long click
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view,
-                                           int position, long id) {
-                Toast.makeText(getActivity(), position + " long click", Toast.LENGTH_LONG).show();
-                return false;
-            }
-        });
     }
 
     /**
@@ -136,7 +122,7 @@ public class HistoryDelegate extends AppDelegate{
      */
     private void initData() {
         mVideoList = new ArrayList<VideoInfo>();
-        mVideoList = dbHelper.scanRecode();
+        mVideoList = historyDao.requestAllHistory();
         for (int i = 0; i < mVideoList.size(); i++) {
             mVideoList.get(i).setBitmap(findUtils.getBitmap(mVideoList.get(i).getTitle()));
         }
@@ -148,5 +134,14 @@ public class HistoryDelegate extends AppDelegate{
     private int dp2px(int dp) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
                 getActivity().getResources().getDisplayMetrics());
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+        Intent intent = new Intent(new Intent(getActivity(), VideoDetailActivity.class));
+        intent.putExtra("videoInfo", mVideoList.get(i));
+        getActivity().startActivity(intent);
+
     }
 }

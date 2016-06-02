@@ -12,7 +12,7 @@ import android.widget.ListView;
 
 import com.homework.group.videoplayer.R;
 import com.homework.group.videoplayer.ui.history.HistoryActivty;
-import com.homework.group.videoplayer.ui.menu.VideoMenuActivity;
+import com.homework.group.videoplayer.ui.menu.main.VideoMenuActivity;
 
 import java.util.ArrayList;
 import java.util.List;

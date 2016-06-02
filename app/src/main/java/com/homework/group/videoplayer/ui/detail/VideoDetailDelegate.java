@@ -22,6 +22,7 @@ public class VideoDetailDelegate extends AppDelegate{
 
     @Override
     public void initWidget() {
+
     }
 
     public String getText(int id) {

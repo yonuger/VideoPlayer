@@ -19,6 +19,7 @@ public class SampleActivity extends Activity {
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private WithToggleSlideMenu mWithToggleSlideMenu;
+    private SlidingTabsBasicFragment fragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +36,7 @@ public class SampleActivity extends Activity {
 
         if (savedInstanceState == null) {
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
-            SlidingTabsBasicFragment fragment = new SlidingTabsBasicFragment();
+            fragment = new SlidingTabsBasicFragment();
             transaction.replace(R.id.sample_content_fragment, fragment);
             transaction.commit();
         }
@@ -58,5 +59,11 @@ public class SampleActivity extends Activity {
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         mWithToggleSlideMenu.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    protected void onResume(){
+        fragment.refresh();
+        super.onResume();
     }
 }

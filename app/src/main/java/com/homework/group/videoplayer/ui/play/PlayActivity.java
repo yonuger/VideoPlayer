@@ -19,9 +19,10 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 
 import com.homework.group.videoplayer.R;
+import com.homework.group.videoplayer.sql.dao.HistoryDao;
+import com.homework.group.videoplayer.sql.dao.impl.HistoryDaoImpl;
 import com.homework.group.videoplayer.ui.home.SampleActivity;
 import com.homework.group.videoplayer.ui.home.VideoInfo;
-import com.homework.group.videoplayer.sql.DatabaseHelper;
 
 import io.vov.vitamio.MediaPlayer;
 import io.vov.vitamio.Vitamio;
@@ -223,10 +224,10 @@ public class PlayActivity extends Activity {
         Log.i("查看语句", keyCode + " " + KeyEvent.KEYCODE_BACK );
         if( keyCode == KeyEvent.KEYCODE_BACK ){
             Log.i("查看语句", "播放后存储");
-            DatabaseHelper dbHelper = new DatabaseHelper(this);
+            HistoryDao historyDao = new HistoryDaoImpl(this);
             videoInfo.setProcess(mVideoView.getCurrentPosition());
-            dbHelper.addRecode(videoInfo);
-            dbHelper.scanRecode();
+            historyDao.addHistory(videoInfo);
+            historyDao.requestAllHistory();
             Log.i("查看语句", "播放后存储");
 
             finish();
